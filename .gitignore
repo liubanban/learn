@@ -10,3 +10,4 @@ lab/src/main/webapp/WEB-INF/classes/com/cn/lab/controller/RoleController.class
 *.class
 */target/*
 *.class
+lab/target/m2e-wtp/web-resources/META-INF/maven/learn/lab/pom.properties

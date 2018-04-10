@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cn.lab.model.AjaxObj;
 import com.cn.lab.service.CommonService;
-
+ 
 @Controller
 @RequestMapping("common")
 public class CommonController {
