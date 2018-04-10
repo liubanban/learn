@@ -2,3 +2,9 @@
 *.class
 *.class
 *.MF
+*.prefs
+*.class
+lab/src/main/webapp/WEB-INF/classes/com/cn/lab/controller/MenuController.class
+*.class
+lab/src/main/webapp/WEB-INF/classes/com/cn/lab/controller/RoleController.class
+*.class
