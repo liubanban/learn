@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>角色信息</title>
+ #parse("/common/btheader.html")
+</head>
+<body style="padding-top: 20px;">
+	<form class="form-horizontal" role="form" action="$!{basepath}/role/suRole.do" id="myform">
+		<div>
+			<input type="hidden" name = "id" value="$!role.id">
+		</div>
+		<div class="form-group">
+			<label for="rolename" class="col-xs-4 control-label  text-right" >角色名称:</label>
+			<div class="col-xs-6">
+				<input class="form-control" id="rolename" name="rolename" placeholder="请输入角色名" 
+				value="$!role.rolename" > 
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="rolecode" class="col-xs-4 control-label  text-right" >角色编码:</label>
+			<div class="col-xs-6">
+				<input  class="form-control" id="rolecode" name="rolecode" placeholder="请输入角色编码" 
+				value="$!role.rolecode" >
+			</div>
+		</div>
+		 
+		<div class="form-group">
+			<div class=" col-sm-12 text-center">
+				<button type="button" class="btn btn-danger "  onclick="submitform();" id="save">保存</button>
+				<button type="button" class="btn btn-danger "  onclick="closeLayer();" id="close">关闭</button>
+			</div>
+		</div>
+	</form>
+</body>
+
+<script type="text/javascript">
+	$(function(){
+		//定义验证规则
+		myFormVa();
+		
+		//根据类型设置界面
+		setPage();
+	});
+	
+	
+	function submitform(){
+		//使用jquery的验证插件,判断是否验证通过
+		if(!$("#myform").valid()){
+			return false;
+		}
+		var url = $("#myform").attr("action");
+		$.ajax({
+			url:url,
+			type:'post',
+			data:$("#myform").serialize(),
+			async: false,
+			success:function(data){
+				if(data.issuccess){
+					parent.layer.msg("操作成功!");
+				}else{
+					parent.layer.msg("操作失败!");
+				}
+				closeLayer();
+			}
+		})
+	}
+	
+	//根据类型设置页面
+	function setPage(){
+		var type = '$!type';
+		if(type=="view"){
+			//设置当前页面只读
+			setPageReadOnly();	
+			$("#save").hide();
+		}
+	}
+	
+	//定义验证规则
+	function myFormVa(){
+		$("#myform").validate({
+			rules:{
+				rolename:{
+					required:true,
+					minlength:2
+				},
+				rolecode:"required" 
+			}
+		});
+	}
+	
+</script>
+</html>

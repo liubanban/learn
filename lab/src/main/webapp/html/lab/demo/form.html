@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>示例form</title> #parse("/common/btheader.html")
+<style type="text/css">
+fieldset {
+	padding: .35em .625em .75em;
+	margin: 0 2px;
+	border: 1px solid silver
+}
+
+legend {
+	padding: .5em;
+	border: 0;
+	width: auto
+}
+</style>
+</head>
+<body style="padding-top: 20px;">
+	<form class="form-horizontal" role="form">
+		<fieldset>
+			<legend>
+				<a href="http://blog.csdn.net/mixika99/article/details/53357190">jquery bootstrap treeview 参考文档</a>
+			</legend>
+		 	<div id="tree"></div>
+		 	
+		 </fieldset>
+		 
+		<fieldset>
+			<legend>
+				<a href="http://www.bootcss.com/p/bootstrap-datetimepicker/index.htm">时间插件参考文档</a>
+			</legend>
+			<div class="form-group">
+				<label for="username" class="col-xs-4 control-label  text-right">选择时间:</label>
+				<div class="col-xs-6">
+					<input class="form-control" id="datetimepicker">
+				</div>
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>
+				<a href="http://silviomoreto.github.io/bootstrap-select/examples/">select插件参考文档</a>
+			</legend>
+			<div class="form-group">
+				<label for="username" class="col-xs-4 control-label  text-right">普通选择:</label>
+				<div class="col-xs-6">
+					<select class="selectpicker">
+						<option>Mustard</option>
+						<option>Ketchup</option>
+						<option>Relish</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="username" class="col-xs-4 control-label  text-right">可搜索:</label>
+				<div class="col-xs-6">
+					<select class="selectpicker" data-live-search="true">
+						<option>Hot Dog, Fries and a Soda</option>
+						<option>Burger, Shake and a Smile</option>
+						<option>Sugar, Spice and all things nice</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="username" class="col-xs-4 control-label  text-right">多选:</label>
+				<div class="col-xs-6">
+					<select class="selectpicker" multiple id="duoxuan">
+						<option>Mustard</option>
+						<option>Ketchup</option>
+						<option>Relish</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="username" class="col-xs-4 control-label  text-right">选择带有optgroup的框:</label>
+				<div class="col-xs-6">
+					<select class="selectpicker">
+						<optgroup label="Picnic">
+							<option>Mustard</option>
+							<option>Ketchup</option>
+							<option>Relish</option>
+						</optgroup>
+						<optgroup label="Camping">
+							<option>Tent</option>
+							<option>Flashlight</option>
+							<option>Toilet Paper</option>
+						</optgroup>
+					</select>
+				</div>
+			</div>
+		</fieldset>
+
+		<fieldset>
+			<legend>
+				<a href="https://www.kancloud.cn/wangfupeng/wangeditor3/332599">富文本插件参考文档</a>
+			</legend>
+			<div class="form-group">
+				<div class="col-xs-2"></div>
+				<div class="col-xs-8">
+					<div id="editor">
+						<p>内容内容</p>
+					</div>
+				</div>
+				<div class="col-xs-2"></div>
+			</div>
+		</fieldset>
+
+	</form>
+</body>
+<script type="text/javascript">
+	//富文本编辑器
+	var E = window.wangEditor;
+	var editor = new E('#editor');
+	// 或者 var editor = new E( document.getElementById('editor') )
+	editor.create();
+	
+	//时间控件
+	$('#datetimepicker').datetimepicker({
+		language : "zh-CN",
+		format : 'yyyy-mm-dd',
+		minView : 2,
+		autoclose : true,
+		todayBtn : true,
+		todayHighlight : true
+	});
+	
+	//树形结构
+	$('#tree').treeview({
+		backColor: "#FFFFF0",
+		checkedIcon:"",
+		enableLinks : true,
+		showTags : true,
+		data : getTree(),
+		onNodeSelected:function(event,data){
+			debugger;
+		}
+	});
+
+	function getTree() { 
+		var tree = new Array();
+		var url = "$!{basepath}/demo/getNodeList.do";
+		$.ajax({
+			url:url,
+			type:'post',
+			async: false,
+			success:function(data){
+				tree = data;
+			}
+		});
+		return tree;
+	}
+</script>
+</html>

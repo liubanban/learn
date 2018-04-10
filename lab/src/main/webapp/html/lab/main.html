@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en"  >
+<head>
+#parse("/common/header.html")
+<style type="text/css">
+            html,body { height: 100%;margin: 0; padding: 0;}
+            .nopadding{
+            	padding:0px;
+            }
+</style>
+</head>
+<body >
+	<div class="navbar navbar-default" id="navbar" style="height: 6%;">
+		<div class="navbar-container" id="navbar-container">
+			<div class="navbar-header pull-left">
+				<a href="#" class="navbar-brand"> <small> <i class="icon-leaf"></i> 实验室系统 </small> </a>
+				<!-- /.brand -->
+			</div>
+			<!-- /.navbar-header -->
+
+			<div class="navbar-header pull-right" role="navigation">
+				<ul class="nav ace-nav">
+
+					<li class="light-blue"><a data-toggle="dropdown" href="#" class="dropdown-toggle"> <img class="nav-user-photo" src="$!basepath/html/ace/assets/avatars/user.jpg" alt="Jason's Photo" /> <span
+							class="user-info"> <small>欢迎光临,</small> Jason </span> <i class="icon-caret-down"></i> </a>
+
+						<ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+
+							<li><a href="#"> <i class="icon-off"></i> 退出 </a></li>
+						</ul></li>
+				</ul>
+				<!-- /.ace-nav -->
+			</div>
+			<!-- /.navbar-header -->
+		</div>
+		<!-- /.container -->
+	</div>
+
+	<div class="main-container " id="main-container"  style="height: 93%;">
+
+		<div class="main-container-inner "  style="height: 100%;">
+			<a class="menu-toggler" id="menu-toggler" href="#"> <span class="menu-text"></span> </a>
+
+			<div class="sidebar" id="sidebar">
+				<ul class="nav nav-list" id="navs">
+					<li class="active"><a href="main.html"> <i class="icon-dashboard"></i> <span class="menu-text"> 控制台 </span> </a></li>
+					#if($!nodes)#foreach($node in $!nodes)
+						<li>
+							<a href="#"  #if($!node.nodes) class="dropdown-toggle" #end> 
+								<i class="icon-desktop"></i> 
+								<span class="menu-text">$!node.text</span> 
+								#if($!node.nodes)
+								<b class="arrow icon-angle-down"></b>
+								#end
+							</a>
+							<!-- velocity 宏递归显示子菜单 -->
+							#menudg($!node)
+						</li>
+						#end
+					#end
+				</ul>
+				<!-- /.nav-list -->
+
+				<div class="sidebar-collapse" id="sidebar-collapse">
+					<i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+				</div>
+			</div>
+
+			<div class="main-content "   style="height: 100%;">
+				 
+				<div class="page-content  nopadding"    style="height: 100%;" >
+					<!-- 这里解析真正的显示界面内容 -->
+					<iframe width="100%"  height="100%" marginheight="5px" marginwidth = "5px" scrolling="yes"
+							src="${basepath}/login/toWelcome.do" frameborder="0" data-id="" seamless="" name="myiframe"></iframe>
+				</div>
+				<!-- /.page-content -->
+			</div>
+			<!-- /.main-content -->
+		</div>
+		<!-- /.main-container-inner -->
+	</div>
+	<!-- /.main-container -->
+</body>
+</html>

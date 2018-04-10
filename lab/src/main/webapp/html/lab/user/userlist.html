@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+#parse("/common/btheader.html")
+</head>
+<body>
+	<div class="panel-body" style="padding-bottom:0px;">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<form id="formSearch" class="form-horizontal" action="$!basepath/user/userList.do" method="post">
+					<div class="form-group" style="margin-bottom:5px">
+						<label class="control-label col-sm-1" for="username">用户名:</label>
+						<div class="col-sm-3">
+							<input class="form-control" id="username" name="username" value="$!query.username">
+						</div>
+						<label class="control-label col-sm-1" for="usercode">用户编码:</label>
+						<div class="col-sm-3">
+							<input class="form-control" id="usercode" name="usercode" value="$!query.usercode">
+						</div>
+						<div class="col-sm-4" style="text-align:left;">
+							<button type="submit" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<div id="toolbar" class="btn-group">
+			<button id="btn_add" type="button" class="btn btn-default">
+				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+			</button>
+			<button id="btn_edit" type="button" class="btn btn-default">
+				<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
+			</button>
+			<button id="btn_delete" type="button" class="btn btn-default">
+				<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+			</button>
+		</div>
+		<table id="usertables"></table>
+</body>
+
+<script type="text/javascript">
+$(function() {
+
+		//1.初始化Table
+		var oTable = new TableInit();
+		oTable.Init();
+		
+		//初始化button
+		initButton();
+	});
+
+	var TableInit = function() {
+		var oTableInit = new Object();
+		//初始化Table
+		oTableInit.Init = function() {
+			$('#usertables').bootstrapTable({
+				url : '$!{basepath}/user/getUserList.do', //请求后台的URL（*）
+				method : 'POST', //请求方式（*）
+				//这里默认是'application/json',如果使用post的话,需要修改成这样才行.要不后台收不到数据
+				contentType:"application/x-www-form-urlencoded; charset=UTF-8",
+				toolbar : '#toolbar', //工具按钮用哪个容器
+				toolbarAlign:"left",
+				striped : true, //是否显示行间隔色
+				cache : false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+				pagination : true, //是否显示分页（*）
+				sortable : true, //是否启用排序  设置为false 将禁止所有列的排序
+				order : "asc", //排序方式
+				/* queryParamsType的默认值为 'limit' ,在默认情况下 传给服务端的参数为：offset,limit,sort
+                                          设置为 ''  在这种情况下传给服务器的参数为：pageSize,pageNumber */
+				queryParamsType:'',
+				queryParams : oTableInit.queryParams,//传递参数（*）
+				sidePagination : "server", //分页方式：client客户端分页，server服务端分页（*）
+				pageNumber : 1, //初始化加载第一页，默认第一页
+				pageSize : 10, //每页的记录行数（*）
+				pageList : [ 5,10, 15, 20 ], //可供选择的每页的行数（*）
+				search : false, //是否显示表格搜索，开启后查询的params里searchtext就有值了,可以给后台做条件,但是已经有专门的查询条件了,不需要
+				showColumns : true, //是否可以控制显示那些列
+				showRefresh : true, //是否显示刷新按钮
+				minimumCountColumns : 2, //最少允许的列数
+				clickToSelect : true, //是否启用点击选中行
+				//height : 500, //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+				uniqueId : "id", //每一行的唯一标识，一般为主键列
+				showToggle : false, //是否显示详细视图和列表视图的切换按钮
+				cardView : false, //是否显示详细视图
+				detailView : false, //是否显示父子表
+				showHeader: true,//是否显示table 的header
+				showFooter : false,//是否显示table 的footer,需要列定义里也配置使用footerFormatter
+				showPaginationSwitch : true,//隐藏或显示控制分页控件显示与否的按钮
+				singleSelect : false,//设置True 将禁止多选
+				checkboxHeader : true,//设置false 将在列头隐藏check-all checkbox
+				onClickRow : function(row,$element,field){
+					//点击行事件
+					//alert(row.username);
+					//alert($element.html());
+					//alert(field);
+				},
+				onDblClickRow:function(row,$element,field){
+				},
+				onLoadSuccess:function(data){
+					//开启表单列宽可以拖动设置
+					colResize();
+				},
+				onLoadError:function(){
+					return "抱歉,后台出错,请联系管理员!"
+				},
+				columns : [ {
+					checkbox : true,
+				}, {
+					field:'id',
+					visible:false
+				}, {
+					title : '序号',
+					field : 'seq',
+					titleTooltip:'titleTooltip',
+					formatter: function (value, row, index) {  
+                            return index+1;  
+                     },
+                    align:"center",
+					footerFormatter:"合计"
+				}, {
+					field : 'username',
+					title : '用户名'  ,
+					sortable:true,
+                    align:"center",
+					footerFormatter:"合计用户名"
+				}, {
+					field : 'usercode',
+					title : '用户编码' ,
+					sortable:true,
+                    align:"center",
+					footerFormatter:"合计编码"
+				}, {
+					field : 'sex',
+					title : '性别',
+					formatter: function (value, row, index) {  
+							if(value=="0"){
+								return '男';
+							}else if(value=='1'){
+								return '女';
+							}
+                     }  ,
+					sortable:true,
+                    align:"center",
+					footerFormatter:"合计性别"
+				}, {
+					field : 'phone',
+					title : '电话' ,
+					sortable:true,
+                    align:"center",
+					footerFormatter:"合计电话"
+				}, {
+					title : '操作' ,
+                    align:"center",
+					formatter: function (value, row, index) {  
+							var view = "<a href='javascript:void(0)' onclick=lopen('$!{basepath}/user/userInfo.do?type=view&id="+row.id+"','查看用户')>查看</a>";
+							return view;
+                     }  
+				}  ]
+			});
+		};
+
+		//得到查询的参数
+		oTableInit.queryParams = function(params) {
+			var temp = { //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+				pageNum : params.pageNumber, //页面大小
+				pageSize : params.pageSize,
+				sortName:params.sortName,//这里是点击列排序的时候使用的列名
+				sortOrder:params.sortOrder,
+				username : $("#username").val(),
+				usercode : $("#usercode").val()
+			//页码
+			};
+			return temp;
+		};
+		return oTableInit;
+	};
+ 	//初始化按钮事件
+ 	function initButton(){
+ 		//新增按钮
+ 		$("#btn_add").bind("click",function(){
+			lopen('$!{basepath}/user/userInfo.do','用户信息');
+ 		});
+ 		//查询按钮
+ 		$("#btn_query").bind("click",function(){
+ 			//点击查询,刷新列表信息
+			$("#usertables").bootstrapTable('refresh');
+			//提交查询表单
+			//$("#formSearch").submit();
+ 		});
+ 		//编辑按钮
+ 		$("#btn_edit").bind("click",function(){
+ 			var cks = new Array();
+ 			cks = $("#usertables").bootstrapTable('getSelections');
+ 			debugger;
+ 			if(cks.length!=1){
+ 				layer.msg("请选择一条数据进行编辑!");
+ 				return false;
+ 			}else{
+ 				var url = "$!{basepath}/user/userInfo.do?id="+cks[0].id;
+				lopen(url,'用户信息');
+ 			}
+ 		});
+ 		//删除按钮 btn_delete
+ 		$("#btn_delete").bind("click",function(){
+ 			var cks = $("#usertables").bootstrapTable('getSelections');
+ 			if(cks.length>0){
+ 				var ids = "";
+ 				for(var i in cks){
+ 					ids+=cks[i].id+",";
+ 				}
+ 				console.log("ids="+ids);
+ 				var url = "$!{basepath}/user/delUser.do";
+ 				$.ajax({
+						url:url,
+						type:'post',
+						data:{
+							ids:ids
+						},
+						async: false,
+						success:function(data){
+							if(data.issuccess){
+								layer.msg("删除成功!");
+							}else{
+								layer.msg("操作失败!");
+							}
+							$("#usertables").bootstrapTable('refresh');
+						}
+					});
+ 			}else{
+ 				layer.msg("请选择数据!");
+ 				return false;
+ 			}
+ 		
+ 		});
+ 	} 
+</script>
+
+</html>

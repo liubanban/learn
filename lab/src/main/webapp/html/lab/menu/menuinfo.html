@@ -1,0 +1,161 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>菜单信息</title>
+ #parse("/common/btheader.html")
+
+</head>
+<body style="padding-top: 20px;">
+	<form class="form-horizontal" role="form" action="$!{basepath}/menu/suMenu.do" id="myform">
+		<div>
+			<input type="hidden" name = "id" value="$!menu.id">
+		</div>
+		<div class="form-group">
+			<label for="menuname" class="col-xs-4 control-label  text-right" >菜单名称:</label>
+			<div class="col-xs-6">
+				<input class="form-control" id="menuname" name="menuname" placeholder="请输入菜单名称" 
+				value="$!menu.menuname" > 
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="menucode" class="col-xs-4 control-label  text-right" >菜单编码:</label>
+			<div class="col-xs-6">
+				<input  class="form-control" id="menucode" name="menucode" placeholder="请输入菜单编码" 
+				value="$!menu.menucode" >
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="phone" class="col-xs-4 control-label text-right">路径:</label>
+			<div class="col-xs-6">
+				<input class="form-control" id="menuurl" name="menuurl" placeholder="请输入路径" 
+				value="$!menu.menuurl"  >
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="phone" class="col-xs-4 control-label text-right">父节点:</label>
+			<div class="col-xs-6">
+				<input class="form-control" id="pname" placeholder="请选择父节点"  onclick="getParent()">
+				<input id="pid" name="pid"  value="$!menu.pid" type="hidden">
+		 		<div id="tree" style="display:none;" onclick="stopPorp();"></div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class=" col-sm-12 text-center">
+				<button type="button" class="btn btn-danger "  onclick="submitform();" id="save">保存</button>
+				<button type="button" class="btn btn-danger "  onclick="closeLayer();" id="close">关闭</button>
+			</div>
+		</div>
+	</form>
+</body>
+
+<script type="text/javascript">
+	$(function(){
+		//定义验证规则
+		myFormVa();
+		
+		//根据类型设置界面
+		setPage();
+		
+		//初始化菜单树形结构
+		initMenuTree();
+		
+		//初始化父节点名称
+		setPname();
+	});
+	
+	function setPname(){
+		$("#pname").val(getVByK("sysmenu", "id", '$!menu.pid', "menuname"));
+	}
+	
+	function submitform(){
+		//使用jquery的验证插件,判断是否验证通过
+		if(!$("#myform").valid()){
+			return false;
+		}
+		var url = $("#myform").attr("action");
+		$.ajax({
+			url:url,
+			type:'post',
+			data:$("#myform").serialize(),
+			async: false,
+			success:function(data){
+				if(data.issuccess){
+					parent.layer.msg("操作成功!");
+				}else{
+					parent.layer.msg("操作失败!");
+				}
+				closeLayer();
+			}
+		})
+	}
+	
+	//根据类型设置页面
+	function setPage(){
+		var type = '$!type';
+		if(type=="view"){
+			//设置当前页面只读
+			setPageReadOnly();	
+			$("#save").hide();
+		}
+	}
+	
+	//定义验证规则
+	function myFormVa(){
+		$("#myform").validate({
+			rules:{
+				menuname:{
+					required:true,
+					minlength:2
+				},
+				menucode:"required",
+				menuurl:"required"
+			}
+		});
+	}
+	//初始化菜单树形结构
+	function initMenuTree(){
+		//树形结构
+		$('#tree').treeview({
+			data : getTree(),
+			levels : '1',
+			onNodeSelected:function(event,data){
+				var pid = data.id;
+				var pname = data.text;
+				$("#pname").val(pname);
+				$("#pid").val(pid);
+				$("#tree").hide();
+			}
+		});
+	}
+
+	function getTree() { 
+		var tree = new Array();
+		var url = "$!{basepath}/menu/getNodeList.do";
+		$.ajax({
+			url:url,
+			type:'post',
+			async: false,
+			success:function(data){
+				tree = data;
+			}
+		});
+		return tree;
+	}
+	
+	//选择父节点
+	function getParent(){
+		$("#tree").show();
+		$(document).on("click", function(){
+	        $("#tree").hide();
+	    });
+	    //自己的事件不冒泡到父节点
+	    this.event.stopPropagation();
+	}
+	
+	function stopPorp(){
+	    //自己的事件不冒泡到父节点
+	    this.event.stopPropagation();
+	}
+</script>
+</html>
