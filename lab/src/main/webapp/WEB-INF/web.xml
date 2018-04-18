@@ -10,38 +10,18 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:spring/applicationContext.xml</param-value>
 	</context-param>
-	<filter>
-		<filter-name>springSessionRepositoryFilter</filter-name>
-		<filter-class>org.springframework.web.filter.DelegatingFilterProxy
-		</filter-class>
-	</filter>
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	<filter>
-		<filter-name>springSecurityFilterChain</filter-name>
-		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>springSessionRepositoryFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>springSecurityFilterChain</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
+
 	<servlet>
 		<servlet-name>springmvc</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-		<init-param>  
-			<param-name>contextConfigLocation</param-name>  
-			<!--其中<param-value>**.xml</param-value> 这里可以使用多种写法-->  
-			<!--1、不写,使用默认值:/WEB-INF/<servlet-name>-servlet.xml-->  
-			<!--2、<param-value>/WEB-INF/classes/dispatcher-servlet.xml</param-value>-->  
-			<!--3、<param-value>classpath*:dispatcher-servlet.xml</param-value>-->  
-			<!--4、多个值用逗号分隔-->  
-			<param-value>classpath:spring/spring-mvc.xml</param-value>  
-		</init-param>  
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:spring/spring-mvc.xml</param-value>
+		</init-param>
+
 	</servlet><!-- Spring字符集过滤器 -->
 	<filter>
 		<filter-name>SpringEncodingFilter</filter-name>
@@ -64,6 +44,11 @@
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
-		<welcome-file>/login/toLogin.do</welcome-file>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
 </web-app>

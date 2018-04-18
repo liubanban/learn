@@ -26,20 +26,6 @@ public class LoginController {
 	private SySMenuService sySMenuService;
 	@Autowired
 	private UserTService userTService;
-
-	/**
-	 * @param req
-	 * @param rps
-	 * @return
-	 */
-	@RequestMapping("toLogin.do")
-	public ModelAndView toLogin(HttpServletRequest req,HttpServletResponse rps) {
-		ModelAndView view = new ModelAndView();
-		view.setViewName("lab/login.html");
-		return ModelUtil.Init(view);
-	}
-
-	
 	/**
 	 * @param req
 	 * @param rps
@@ -53,10 +39,8 @@ public class LoginController {
 		req.setAttribute("sortOrder", "asc");
 		PageUtil.startOrderBy(req);
 		List<SysMenu> mlist = sySMenuService.selectAllByQuery(new SysMenu());
-		if(mlist!=null&&mlist.size()>0){
-			TreeNode rootnode = sySMenuService.reListMenus(mlist);
-			view.addObject("nodes", rootnode.getNodes());
-		}
+		TreeNode rootnode = sySMenuService.reListMenus(mlist);
+		view.addObject("nodes", rootnode.getNodes());
 		return ModelUtil.Init(view);
 	}
 

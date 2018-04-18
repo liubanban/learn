@@ -50,6 +50,13 @@
 		<div class="row">
 			<div class="col-xs-12 center"  >
 				<span class="h1" >欢迎使用实验室系统</span>
+					#set($list =  $!userTService.add("aaa","bbb"))
+					#foreach($li in $list)
+						<a>$li</a>
+						#if($foreach.hasNext)
+						,
+						#end
+					#end
 			</div>
 		</div>
 	</div>  
