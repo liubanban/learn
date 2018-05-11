@@ -7,7 +7,7 @@
 
     $.fn.bootstrapTable.locales['zh-CN'] = {
         formatLoadingMessage: function () {
-            return '俺正在加载,修改信息去bootstrap-table-zh-CN.js中修改吧!!!';
+            return '正在加载....';
         },
         formatRecordsPerPage: function (pageNumber) {
             return '每页显示 ' + pageNumber + ' 条记录';
@@ -19,7 +19,7 @@
             return '搜索';
         },
         formatNoMatches: function () {
-            return '没有数据,你搞啥呢!!! 修改信息去bootstrap-table-zh-CN.js中修改吧!!!';
+            return '没有数据。';
         },
         formatPaginationSwitch: function () {
             return '隐藏/显示分页';

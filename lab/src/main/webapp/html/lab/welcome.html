@@ -5,11 +5,15 @@
 <title>Insert title here</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <!-- basic styles -->
-<link href="$!basepath/html/ace/assets/css/bootstrap.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="$!basepath/html/ace/assets/css/font-awesome.min.css" />
+<link href="$!basepath/html/ace/assets/css/bootstrap.min.css"
+	rel="stylesheet" />
+<link rel="stylesheet"
+	href="$!basepath/html/ace/assets/css/font-awesome.min.css" />
 <link rel="stylesheet" href="$!basepath/html/ace/assets/css/ace.min.css" />
-<link rel="stylesheet" href="$!basepath/html/ace/assets/css/ace-rtl.min.css" />
-<link rel="stylesheet" href="$!basepath/html/ace/assets/css/ace-skins.min.css" />
+<link rel="stylesheet"
+	href="$!basepath/html/ace/assets/css/ace-rtl.min.css" />
+<link rel="stylesheet"
+	href="$!basepath/html/ace/assets/css/ace-skins.min.css" />
 <script src="$!basepath/html/ace/assets/js/ace-extra.min.js"></script>
 <script src="$!basepath/html/ace/assets\js\jquery-2.0.3.min.js"></script>
 <script type="text/javascript">
@@ -26,40 +30,38 @@
 </script>
 <script src="$!basepath/html/ace/assets/js/bootstrap.min.js"></script>
 <script src="$!basepath/html/ace/assets/js/typeahead-bs2.min.js"></script>
-<script src="$!basepath/html/ace/assets/js/jquery-ui-1.10.3.custom.min.js"></script>
+<script
+	src="$!basepath/html/ace/assets/js/jquery-ui-1.10.3.custom.min.js"></script>
 <script src="$!basepath/html/ace/assets/js/jquery.ui.touch-punch.min.js"></script>
 <script src="$!basepath/html/ace/assets/js/jquery.slimscroll.min.js"></script>
 <script src="$!basepath/html/ace/assets/js/jquery.easy-pie-chart.min.js"></script>
 <script src="$!basepath/html/ace/assets/js/jquery.sparkline.min.js"></script>
 <script src="$!basepath/html/ace/assets/js/flot/jquery.flot.min.js"></script>
 <script src="$!basepath/html/ace/assets/js/flot/jquery.flot.pie.min.js"></script>
-<script src="$!basepath/html/ace/assets/js/flot/jquery.flot.resize.min.js"></script>
+<script
+	src="$!basepath/html/ace/assets/js/flot/jquery.flot.resize.min.js"></script>
 <script src="$!basepath/html/ace/assets/js/ace-elements.min.js"></script>
 <script src="$!basepath/html/ace/assets/js/ace.min.js"></script>
 <style type="text/css">
-			html { overflow-x:hidden; }
-			.czcenter{
-				padding: 17% 0px 0px 0px;
-				height: 100%;
-			}
+html {
+	overflow-x: hidden;
+}
+
+.czcenter {
+	padding: 17% 0px 0px 0px;
+	height: 100%;
+}
 </style>
 </head>
 <body>
-<div class="row czcenter"  >
-	<div class="col-xs-12">
-		<div class="row">
-			<div class="col-xs-12 center"  >
-				<span class="h1" >欢迎使用实验室系统</span>
-					#set($list =  $!userTService.add("aaa","bbb"))
-					#foreach($li in $list)
-						<a>$li</a>
-						#if($foreach.hasNext)
-						,
-						#end
-					#end
+	<div class="row czcenter">
+		<div class="col-xs-12">
+			<div class="row">
+				<div class="col-xs-12 center">
+					<span class="h1">欢迎使用实验室系统</span>
+				</div>
 			</div>
 		</div>
-	</div>  
-</div>
+	</div>
 </body>
 </html>
