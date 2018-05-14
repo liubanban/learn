@@ -236,6 +236,84 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <resultMap id="BaseResultMap" type="com.cn.lab.model.Teacher">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="tname" jdbcType="VARCHAR" property="tname" />
+    <result column="tsex" jdbcType="VARCHAR" property="tsex" />
+    <result column="tbirthday" jdbcType="TIMESTAMP" property="tbirthday" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, tname, tsex, tbirthday
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from teacher
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from teacher
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cn.lab.model.Teacher">
+    insert into teacher (id, tname, tsex, 
+      tbirthday)
+    values (#{id,jdbcType=INTEGER}, #{tname,jdbcType=VARCHAR}, #{tsex,jdbcType=VARCHAR}, 
+      #{tbirthday,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.lab.model.Teacher">
+    insert into teacher
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="tname != null">
+        tname,
+      </if>
+      <if test="tsex != null">
+        tsex,
+      </if>
+      <if test="tbirthday != null">
+        tbirthday,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="tname != null">
+        #{tname,jdbcType=VARCHAR},
+      </if>
+      <if test="tsex != null">
+        #{tsex,jdbcType=VARCHAR},
+      </if>
+      <if test="tbirthday != null">
+        #{tbirthday,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.lab.model.Teacher">
+    update teacher
+    <set>
+      <if test="tname != null">
+        tname = #{tname,jdbcType=VARCHAR},
+      </if>
+      <if test="tsex != null">
+        tsex = #{tsex,jdbcType=VARCHAR},
+      </if>
+      <if test="tbirthday != null">
+        tbirthday = #{tbirthday,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.lab.model.Teacher">
+    update teacher
+    set tname = #{tname,jdbcType=VARCHAR},
+      tsex = #{tsex,jdbcType=VARCHAR},
+      tbirthday = #{tbirthday,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.cn.lab.model.Teacher">
     
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="tname" jdbcType="VARCHAR" property="tname" />

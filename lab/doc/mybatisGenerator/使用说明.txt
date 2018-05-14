@@ -2,3 +2,7 @@
 1：cd到该目录下。
 2：执行
 java -Dfile.encoding=UTF-8 -jar mybatis-generator-core-1.3.0.jar -configfile generator.xml -overwrite
+
+
+改jar包被修改过，源码地址：
+https://github.com/liubanban/generator/tree/mybatis-generator-1.3.0/mybatis-generator-core
