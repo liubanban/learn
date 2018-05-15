@@ -48,7 +48,7 @@
 
     $.extend($.fn.bootstrapTable.defaults, {
         reorderableColumns: false,
-        maxMovingRows: 10,
+        maxMovingRows: 100,
         onReorderColumn: function (headerFields) {
             return false;
         },
