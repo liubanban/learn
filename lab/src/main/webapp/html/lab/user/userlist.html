@@ -38,12 +38,15 @@
 				<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
 			</button>
 		</div>
-		<table id="usertables" data-reorderable-columns="true" class="table-condensed table-bordered" ></table>
+		<table id="usertables" data-reorderable-columns="true" data-resizable="true" class="table-condensed table-bordered" ></table>
 </body>
 
 <script type="text/javascript">
 $(function() {
 
+		localStorage.uname = "liubb";
+		localStorage.uage = "21";
+	
 		//1.初始化Table
 		var oTable = new TableInit();
 		oTable.Init();
@@ -92,16 +95,8 @@ $(function() {
 				singleSelect : false,//设置True 将禁止多选
 				checkboxHeader : true,//设置false 将在列头隐藏check-all checkbox
 				onClickRow : function(row,$element,field){
-					//点击行事件
-					//alert(row.username);
-					//alert($element.html());
-					//alert(field);
 				},
 				onDblClickRow:function(row,$element,field){
-				},
-				onLoadSuccess:function(data){
-					//开启表单列宽可以拖动设置
-					colResize();
 				},
 				onLoadError:function(){
 					return "抱歉,后台出错,请联系管理员!"

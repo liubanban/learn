@@ -312,6 +312,7 @@
         totalRows: 0, // server side need to set
         pageNumber: 1,
         pageSize: 10,
+        tid: "",
         pageList: [10, 25, 50, 100],
         paginationHAlign: 'right', //right, left
         paginationVAlign: 'bottom', //bottom, top, both
@@ -417,14 +418,24 @@
             return false;
         },
         onLoadSuccess: function (data) {
-            return false;
-        },
+			var uconfigs = JSON.parse(localStorage.getItem(this.tid));
+			if(uconfigs){
+				uconfigs.forEach(function (sField) {
+			        $(".bootstrap-table ul.dropdown-menu").find('input[data-field=' + sField+ ']').trigger("click");
+			      });
+			}
+		},
         onLoadError: function (status) {
             return false;
         },
         onColumnSwitch: function (field, checked) {
-            return false;
-        },
+        	var hcols = $("#"+this.tid).bootstrapTable("getHiddenColumns");
+			var uconfigs = [];
+			hcols.forEach(function(hcol){
+					uconfigs.push(hcol.field);
+			});
+			localStorage.setItem(this.tid,JSON.stringify(uconfigs));
+		},
         onPageChange: function (number, size) {
             return false;
         },
@@ -636,6 +647,8 @@
     };
 
     BootstrapTable.prototype.initTable = function () {
+    	//update by mine
+    	this.options.tid=this.$el.attr("id");
         var that = this,
             columns = [],
             data = [];

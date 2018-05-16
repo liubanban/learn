@@ -38,7 +38,7 @@
 				<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
 			</button>
 		</div>
-		<table id="roletables"></table>
+		<table id="roletables"  class="table-condensed table-bordered"   data-reorderable-columns="true"  data-resizable="true" ></table>
 </body>
 
 <script type="text/javascript">
@@ -99,8 +99,6 @@ $(function() {
 				onDblClickRow:function(row,$element,field){
 				},
 				onLoadSuccess:function(data){
-					//开启表单列宽可以拖动设置
-					colResize();
 				},
 				onLoadError:function(){
 					return "抱歉,后台出错,请联系管理员!"

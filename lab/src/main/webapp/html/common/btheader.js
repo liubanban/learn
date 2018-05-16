@@ -8,14 +8,6 @@ $(function(){
 		$("body").find("input:visible").eq(0).focus();
 		
 	});
-	//设置表格列宽可自动拖动设置
-	function colResize(){
-		$("table").each(
-				function(){
-					$(this).colResizable();
-				}
-		);
-	}
 	//打开layer弹出层
 	function lopen(url,title) {
 		layer.open({
