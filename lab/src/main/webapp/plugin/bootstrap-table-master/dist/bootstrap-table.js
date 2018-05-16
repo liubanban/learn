@@ -418,7 +418,7 @@
             return false;
         },
         onLoadSuccess: function (data) {
-			var uconfigs = JSON.parse(localStorage.getItem(this.tid));
+			var uconfigs = JSON.parse(localStorage.getItem(localStorage.usercode+"-"+this.tid));
 			if(uconfigs){
 				uconfigs.forEach(function (sField) {
 			        $(".bootstrap-table ul.dropdown-menu").find('input[data-field=' + sField+ ']').trigger("click");
@@ -434,7 +434,7 @@
 			hcols.forEach(function(hcol){
 					uconfigs.push(hcol.field);
 			});
-			localStorage.setItem(this.tid,JSON.stringify(uconfigs));
+			localStorage.setItem(localStorage.usercode+"-"+this.tid,JSON.stringify(uconfigs));
 		},
         onPageChange: function (number, size) {
             return false;

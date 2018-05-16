@@ -8,7 +8,7 @@
 	<name>lab Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 	<properties>
-		<spring.version>4.0.5.RELEASE</spring.version>
+		<spring.version>4.3.17.RELEASE</spring.version>
 		<mybatis.version>3.2.1</mybatis.version>
 		<slf4j.version>1.6.6</slf4j.version>
 		<log4j.version>1.2.12</log4j.version>
@@ -18,7 +18,7 @@
 		<!-- 添加Spring依赖 --> 
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
+			<artifactId>spring-core</artifactId> 
 			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
